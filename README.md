@@ -1,45 +1,98 @@
 # E-commerce Sales Analysis (October & November 2019)
 
-## Author
-Sameeha H  
-**Date:** August 2025  
+**Author:** Sameeha H  
+**Date:** August 2025 
 
-## Project Overview
-This project analyzes e-commerce sales data from October and November 2019.  
-The goal was to explore customer behavior across different event types such as `view`, `cart`, and `purchase`.
+## 📌 Project Overview
+SQL-driven analysis of customer behavior events — `view`, `cart`, and `purchase` — for a multi-category e-commerce store.  
+Focus areas:
+- Sales trends over time
+- Product performance (top sellers)
+- Conversion funnel (view → cart → purchase)
 
-## Datasets
-- **sales_oct** – October 2019 sales events  
-- **sales_nov** – November 2019 sales events  
+--- 
 
-## Project Structure
+## 📦 Dataset Source
+- Kaggle: *Ecommerce behavior data from multi-category store* by mkechinov  
+  (Note: Raw CSVs and the SQLite DB are **not included** in this repo due to GitHub’s 100MB file limit.)
+
+**Files used locally (not in repo):**
+- `data_raw/2019-Oct.csv`
+- `data_raw/2019-Nov.csv`
+- `ecommerce.db` (SQLite created locally)
+
+---
+
+## 🗂 Project Structure
 ```
-Ecommerce_project/
-│── data_raw/ # Raw dataset files (October & November 2019)
-│── ecommerce/ # SQLite database files
-│── ecommerce_sales_analysis.sql # SQL queries used for analysis
+Ecommerce_Project/
+│── data_raw/ # Raw dataset files (NOT in repo due to size, see Kaggle link below)
+│── ecommerce/ # (optional) configs or notes (can be empty if not used)
+│── ecommerce_sales_analysis.sql # All SQL queries used
 │── README.md # Project documentation
+│── .gitignore # Ignores large files (csv/db)
 ```
+---
+## 🧠 What Each SQL Block Does (plain English)
+- **Row count:** How many events exist in the table.
+- **Event distribution:** How many `view`, `cart`, `purchase` events — helps see funnel volume.
+- **Top products:** Which `product_id`s were purchased the most.
+- **Purchases by day:** Daily totals (helps spot spikes/dips).
+- **Daily views/carts/purchases:** Side-by-side daily trend lines.
+- **Conversion rates (daily):**  
+  - `cart_rate_percent = carts / views`  
+  - `purchase_rate_percent = purchases / carts`
+- **Monthly summary:** Combines Oct + Nov by month for a quick side-by-side.
 
-## Queries Run
-- Total rows in dataset  
-- Count of events (`view`, `cart`, `purchase`)  
-- Top 10 most purchased products  
-- Purchases per day  
-- Daily views, carts, and purchases  
-- Conversion rates (cart rate and purchase rate)  
-- Combined October and November monthly stats  
+> All SQL is saved in: **`ecommerce_sales_analysis.sql`**
 
-## Key Insights
-- Identified daily trends in views, carts, and purchases  
-- Found conversion rates from view → cart and cart → purchase  
-- Compared October vs November performance  
-- Highlighted top-selling products  
+---
 
-## How to Use
-1. Open the database in SQLite.  
-2. Run the queries in `ecommerce_sales_analysis.sql`.  
-3. Compare results across October and November datasets. 
+## 🔁 How To Reproduce (2 simple options)
 
-## 🔎 SQL Queries
-All queries used for this project are saved in [`ecommerce_sales_analysis.sql`](ecommerce_sales_analysis.sql).
+### Option A — Use your own SQLite (DB Browser for SQLite)
+1. Download the Kaggle dataset and unzip it.
+2. Open **DB Browser for SQLite** → **New Database** → save as `ecommerce.db`.
+3. **Import** → **Table from CSV**:
+   - Import `2019-Oct.csv` → table name: `sales_oct`
+   - Import `2019-Nov.csv` → table name: `sales_nov`
+   - Keep `event_time` as **TEXT** (it’s in ISO string form, e.g., `2019-10-01 12:34:56 UTC`)
+4. Open the **Execute SQL** tab.
+5. Click **Open SQL file** → select `ecommerce_sales_analysis.sql`.
+6. Run the queries and view results.
+
+### Option B — Run only a subset (quick check)
+If you only imported October, change table names in queries to `sales_oct` and run the daily trend and funnel queries to verify.
+
+---
+
+## 🔎 Key Insights (fill these after you run)
+- **Funnel volume:** `views > carts > purchases` as expected; largest drop is usually view → cart.  
+- **Best days:** (e.g., “Late Oct weekends showed higher purchases.”)  
+- **Top products:** (e.g., “Product X consistently top 3 in Oct & Nov.”)  
+- **Conversion:** (e.g., “Cart rate ~x%, purchase rate ~y% across the two months.”)
+
+
+---
+
+## ▶️ How to Run the SQL (quick start)
+1. Clone or download this repo.
+2. Open your SQLite tool (e.g., DB Browser).
+3. Import CSVs as `sales_oct` and `sales_nov` (as above).
+4. Open and run `ecommerce_sales_analysis.sql`.
+
+---
+
+## 🚀 Future Improvements
+- Add visualizations (daily trend lines, conversion funnel chart).
+- Build category-level insights (if category data is available).
+- Segment by user/city/device (if fields exist in raw data).
+- Compare pre- and post-promotion windows.
+
+---
+
+## 📄 Notes
+Large files are intentionally ignored via `.gitignore`:
+data_raw/*.csv
+ecommerce.db
+
